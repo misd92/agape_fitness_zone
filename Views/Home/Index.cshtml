@@ -1,3 +1,4 @@
+@model ContactFormModel
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,11 +15,11 @@
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="css/style.css">
-
+    <link rel="stylesheet" href="css/loader.css">
+    <script src="lib/jquery-3.6.1.min.js"></script>
 </head>
 
 <body>
-
     <!-- header section starts      -->
 
     <header class="header">
@@ -492,13 +493,50 @@
             </div>
 
             <div class="box">
-                <h3>newsletter</h3>
-                <p>subscribe for latest updates</p>
-                <form action="">
-                    <input type="email" name="" class="email" placeholder="enter your email" id="">
-                    <input type="submit" value="subscribe" class="btn">
+                <h3>Enquiry</h3>
+                <div id="loader" class="loader loader-body" style="display: none;"></div>
+                <form id="frmEnq">
+                    <p>Please provide your details. Our team will contact you as soon as possible</p>
+                    <input id="email" type="email" name="" class="email" placeholder="enter your email" id="">
+                    <input id="mobile" type="number" name="" class="email" placeholder="enter your mobile no" id="">
+                    <input id="inqSubmit" type="button" value="Submit" onclick="onSubmit()" class="btn">
                 </form>
             </div>
+            <script>
+                function toggleLoader() {
+                    if (document.getElementById("loader").style.display == "none") {
+                        document.getElementById("loader").style.display = "block";
+                        document.getElementById("frmEnq").style.display = "none";
+                    } else {
+                        document.getElementById("loader").style.display = "none";
+                        document.getElementById("frmEnq").style.display = "block";
+                    }
+                }
+                function clearForm() {
+                    document.getElementById("email").value = "";
+                    document.getElementById("mobile").value = "";
+                    toggleLoader();
+                }
+                function onSubmit() {
+                    toggleLoader();
+                    var enqInput = { "name": "", "email": "", "mobile": "" }
+                    $.ajax({
+                        type: "POST",
+                        url: "enquiry",
+                        data: JSON.stringify(enqInput),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            clearForm();
+                            alert(data);
+                        },
+                        error: function () {
+                            clearForm();
+                            alert(data);
+                        }
+                    });
+                }
+            </script>
 
         </div>
 

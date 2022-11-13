@@ -1,0 +1,40 @@
+:root {
+    --main-bg-color: #000;
+    --loader-bg-color: #FFF;
+    --loader-acc-color: #f00;
+
+}
+
+.loader-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: var(--main-bg-color);
+    z-index: 10;
+}
+
+.loader {
+    margin-top: 5em;
+}
+
+
+#loader {
+    width: 3em;
+    height: 3em;
+
+    border-radius: 50%;
+    border: 0.75em solid var(--loader-bg-color);
+    border-top-color: var(--loader-acc-color);
+
+    animation: 2s infinite loadercircle;
+}
+
+@keyframes loadercircle {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
